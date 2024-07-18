@@ -47,7 +47,7 @@ ALTRE FUNZIONI UTILI
         def getNumCompConnesse(self):
                 return nx.number_connected_components(self._graph)
 
-# inizio
+
         self.maxCompConn = set()
         self.numMaxCompConn = 0
         def maxCompConnessa(self):
