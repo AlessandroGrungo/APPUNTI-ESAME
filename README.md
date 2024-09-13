@@ -61,6 +61,12 @@ ALTRE FUNZIONI UTILI
 
 SE DEVO LEGGERE UN DROPDOWN CHE HA COME DATI UNA CLASSE:
 
+inserisci nelle iniziali il parametro:
+        self.choice = None
+
+nel dropdown inserisci:
+        (data=oggetto, on_click=self.readDD, text=come vuoi chiamarlo)
+
         def readDD(self, e):
                 if e.control.data == None:
                     self.choice = None
