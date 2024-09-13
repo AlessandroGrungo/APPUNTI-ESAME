@@ -71,6 +71,9 @@ SE DEVO LEGGERE UN DROPDOWN CHE HA COME DATI UNA CLASSE:
                 else:
                     self.choice = e.control.data
 
+        Nell'handle lo richiami con:
+                oggetto = self.choice
+
 SE DEVO COMPIERE UN AZIONE QUANDO CAMBIA IL VALORE DI UN DROPDOWN (PER ESEMPIO POPOLARE UN ALTRO DROPDOWN)
 Inserisco il comando nella funzione che popola il primo Dropdown:
 
