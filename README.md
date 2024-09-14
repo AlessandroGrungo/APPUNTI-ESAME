@@ -174,14 +174,35 @@ RICORSIONE SU NODI DOVE CERCO IL PERCORSO DI PESO MAX (CAMMINO SEMPLICE)
                     parziale.append(nNext)
                     self.ricorsione(nNext, parziale, pesoParziale+self.grafo[nStart][nNext]['weight'])
                     parziale.pop()
-                    
-        def cercaNodi(self, nStart, parziale):
-                result = []
-                for node in self.grafo.neighbors(nStart):
-                    if node not in parziale:
-                        result.append(node)
-                return result
 
+RICORSIONE PER INSIEME DI NODI (DI COMP CONN)
 
-
+    def calcSet(self, statoName, pTot):
+        nOrigine = self.riconosciNodoDalNome(statoName)
+        self.bestSet = set()
+        compConn = nx.node_connected_component(self._grafo, nOrigine)
+        parziale = set([nOrigine])
+        compConn.remove(nOrigine)
+        self.ricorsione7(compConn, parziale, pTot)
+        
+    def ricorsione7(self, compConn, parziale, pTot):
+        if self.popolazioneTot(parziale) > pTot:            # 1) verifica se parziale è sol ammissibile
+            return
+        if len(parziale) > len(self.bestSet):         # 2) verifica se parziale è meglio del best
+            self.bestSet = copy.deepcopy(parziale)
+            # qui nessuna return, per ora è sol ottima, può anche migliorare !!
+        for c in compConn:          # 3) ciclo su nodi aggiungibili -- ricorsione
+            if c not in parziale: # 1
+                parziale.add(c)
+                rimanenti = copy.deepcopy(compConn) # 2
+                rimanenti.remove(c) # 3
+                self.ricorsione7(rimanenti, parziale, pTot)
+                parziale.pop()
+        # 1,2,3 usati per limitare la ricorsione ai casi solo necessari
+        
+    def popolazioneTot(self, parziale):
+        count = 0
+        for node in parziale:
+            count += node._Population
+        return count
         
