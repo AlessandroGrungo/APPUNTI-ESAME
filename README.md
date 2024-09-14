@@ -1,3 +1,5 @@
+
+
 # APPUNTI-ESAME
 
 CONTROLLER
@@ -174,35 +176,93 @@ RICORSIONE SU NODI DOVE CERCO IL PERCORSO DI PESO MAX (CAMMINO SEMPLICE)
                     parziale.append(nNext)
                     self.ricorsione(nNext, parziale, pesoParziale+self.grafo[nStart][nNext]['weight'])
                     parziale.pop()
+                    
+        def cercaNodi(self, nStart, parziale):
+                result = []
+                for node in self.grafo.neighbors(nStart):
+                    if node not in parziale:
+                        result.append(node)
+                return result
 
-RICORSIONE PER INSIEME DI NODI (DI COMP CONN)
+CLASSE SIGHTING: Sighting
 
-    def calcSet(self, statoName, pTot):
-        nOrigine = self.riconosciNodoDalNome(statoName)
-        self.bestSet = set()
-        compConn = nx.node_connected_component(self._grafo, nOrigine)
-        parziale = set([nOrigine])
-        compConn.remove(nOrigine)
-        self.ricorsione7(compConn, parziale, pTot)
+        from dataclasses import dataclass
+        from datetime import datetime
         
-    def ricorsione7(self, compConn, parziale, pTot):
-        if self.popolazioneTot(parziale) > pTot:            # 1) verifica se parziale è sol ammissibile
-            return
-        if len(parziale) > len(self.bestSet):         # 2) verifica se parziale è meglio del best
-            self.bestSet = copy.deepcopy(parziale)
-            # qui nessuna return, per ora è sol ottima, può anche migliorare !!
-        for c in compConn:          # 3) ciclo su nodi aggiungibili -- ricorsione
-            if c not in parziale: # 1
-                parziale.add(c)
-                rimanenti = copy.deepcopy(compConn) # 2
-                rimanenti.remove(c) # 3
-                self.ricorsione7(rimanenti, parziale, pTot)
-                parziale.pop()
-        # 1,2,3 usati per limitare la ricorsione ai casi solo necessari
         
-    def popolazioneTot(self, parziale):
-        count = 0
-        for node in parziale:
-            count += node._Population
-        return count
+        @dataclass
+        class Sighting:
+            id: str
+            datetime: datetime
+            city: str
+            state: str
+            country:str
+            shape: str
+            duration: int
+            duration_hm: str
+            comments: str
+            date_posted: datetime
+            latitude: float
+            longitude: float
+        
+        
+            def __str__(self):
+                return self.country
+        
+            def __hash__(self):
+                return hash(self.id)
+
+CLASSE STATE: State
+
+        import math
+        from dataclasses import dataclass
+        from datetime import datetime
+        @dataclass
+        class State:
+            _id: int
+            _Name: str
+            _Capital: str
+            _Lat: float
+            _Lng: float
+            _Area: float
+            _Population: int
+            _Neighbors: []
+        
+            @property
+            def id(self):
+                return self._id
+            @property
+            def lat(self):
+                return self._Lat
+            @property
+            def lng(self):
+                return self._Lng
+            @property
+            def Name(self):
+                return self._Name
+        
+            def __str__(self):
+                return self._Name
+        
+            def __hash__(self):
+                return hash(self._id)
+
+DISTANZA GEO
+
+    def distance_HV(self, other) -> float:
+        """
+        Function that calculate the approximate geodesic distance between two sightings.
+        :param other: another sighting.
+        :return: the approximate geodesic distance in kilometers
+        """
+        lat1 = self._Lat * math.pi / 180
+        lon1 = self._Lng * math.pi / 180
+        lat2 = other._Lat * math.pi / 180
+        lon2 = other._Lng * math.pi / 180
+        R = 6371  # earth radius in km
+        a = math.sin(0.5 * (lat2 - lat1)) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(0.5 * (lon2 - lon1)) ** 2
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+        return R * c
+        
+
         
