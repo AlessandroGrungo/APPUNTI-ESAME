@@ -5,13 +5,15 @@
 CONTROLLER
 
         self._view.update_page()
+
+        self._view.valueDD.value
+                            
+        self._view.dropdd.options.append(ft.dropdown.Option(......))
         
         self._view.txt_result.controls.append(ft.Text(f"........"))
         
         self._view.txt_result.controls.clear()
         
-        self._view.valueDD.value
-
 
 FUNZIONE CHE SVUOTA IL GRAFO
 
