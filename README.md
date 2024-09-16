@@ -273,4 +273,24 @@ TUTTI GLI ARCHI TRA STATI CONFINANTI CON ALMENO UN AVVISTAMENTO in uno dei 2
         where n.state1 < n.state2 
         and (s.state = n.state1 or s.state=n.state2)
         group by n.state1, n.state2
-        
+
+DAO
+
+    @staticmethod
+    def GETQUALCOSA(VALORI):
+        conn = DBConnect.get_connection()
+
+        result = []
+
+        cursor = conn.cursor(dictionary=True)
+        query = """QUERY"""
+
+        cursor.execute(query, (VALORI,)
+
+        for row in cursor:
+            result.append(CLASSE(row['']))
+
+        cursor.close()
+        conn.close()
+        return result
+
