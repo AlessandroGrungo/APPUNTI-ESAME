@@ -265,6 +265,12 @@ DISTANZA GEO
         a = math.sin(0.5 * (lat2 - lat1)) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(0.5 * (lon2 - lon1)) ** 2
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
         return R * c
-        
 
+TUTTI GLI ARCHI TRA STATI CONFINANTI CON ALMENO UN AVVISTAMENTO in uno dei 2
+
+        select n.state1, n.state2, count(*)
+        from neighbor n, sighting s
+        where n.state1 < n.state2 
+        and (s.state = n.state1 or s.state=n.state2)
+        group by n.state1, n.state2
         
