@@ -13,7 +13,17 @@ CONTROLLER
         self._view.txt_result.controls.append(ft.Text(f"........"))
         
         self._view.txt_result.controls.clear()
-        
+
+ECCEZIONI
+
+        try:
+            soglia = float(self._view._txtIn.value) #inserita in minuti
+        except ValueError:
+            self._view.create_alert("Inserisci un valore numerico.")
+            self._view._txtIn.value = ''
+            self._view.update_page()
+            return
+
 
 FUNZIONE CHE SVUOTA IL GRAFO
 
